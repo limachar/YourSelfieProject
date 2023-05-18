@@ -22,7 +22,7 @@
             android:padding="20dp">
 
             <EditText
-                android:id="@+id/signup_email"
+                android:id="@+id/login_email"
                 android:layout_width="350dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
@@ -33,7 +33,7 @@
                 android:padding="8dp" />
 
             <EditText
-                android:id="@+id/signup_password"
+                android:id="@+id/login_password"
                 android:layout_width="350dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
@@ -43,23 +43,13 @@
                 android:hint="Password"
                 android:padding="8dp" />
 
-            <EditText
-                android:id="@+id/signup_confirmpassword"
-                android:layout_width="350dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/mint_green_border"
-                android:drawableLeft="@drawable/ic_baseline_lock_24"
-                android:drawablePadding="8dp"
-                android:hint="Confirm Password"
-                android:padding="8dp" />
 
             <Button
-                android:id="@+id/signup_button"
+                android:id="@+id/login_button"
                 android:layout_width="350dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-                android:text="Sign Up"
+                android:text="Login"
                 android:textSize="18sp"
                 app:cornerRadius="30dp" />
 
@@ -77,8 +67,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/loginRedirectText"
-                android:text="Already a user? Login"
+                android:id="@+id/signupRedirectText"
+                android:text="Not a user yet? Sign up"
                 android:layout_gravity="center"
                 android:padding="8dp"
                 android:textSize="18sp"
