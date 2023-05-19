@@ -56,13 +56,16 @@ public class LoginActivity extends AppCompatActivity {
         signupRedirectText.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, SignupActivity.class)));
 
         googleOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+
         googleClient = GoogleSignIn.getClient(this, googleOptions);
+
         GoogleSignInAccount googleAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (googleAccount != null){
             finish();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
+
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
