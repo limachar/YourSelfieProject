@@ -17,56 +17,60 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="380dp"
+            android:layout_marginTop="250dp"
             android:orientation="vertical"
             android:padding="20dp">
 
             <EditText
                 android:id="@+id/signup_email"
-                android:layout_width="350dp"
+                android:layout_width="320dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
+                android:layout_gravity="center"
                 android:background="@drawable/mint_green_border"
-                android:drawableLeft="@drawable/ic_baseline_email_24"
+                android:drawableStart="@drawable/ic_baseline_email_24"
                 android:drawablePadding="8dp"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:padding="8dp" />
 
             <EditText
                 android:id="@+id/signup_password"
-                android:layout_width="350dp"
+                android:layout_width="320dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
+                android:layout_gravity="center"
                 android:background="@drawable/mint_green_border"
-                android:drawableLeft="@drawable/ic_baseline_lock_24"
+                android:drawableStart="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="8dp"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:padding="8dp" />
 
             <EditText
                 android:id="@+id/signup_confirmpassword"
-                android:layout_width="350dp"
+                android:layout_width="320dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
+                android:layout_gravity="center"
                 android:background="@drawable/mint_green_border"
-                android:drawableLeft="@drawable/ic_baseline_lock_24"
+                android:drawableStart="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="8dp"
-                android:hint="Confirm Password"
+                android:hint="@string/confirm_password"
                 android:padding="8dp" />
 
             <Button
                 android:id="@+id/signup_button"
-                android:layout_width="350dp"
+                android:layout_width="320dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-                android:text="Sign Up"
+                android:layout_gravity="center"
+                android:text="@string/sign_up"
                 android:textSize="18sp"
                 app:cornerRadius="30dp" />
 
             <com.developer.gbuttons.GoogleSignInButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sign in with Google"
+                android:text="@string/google_sign_in"
                 android:id="@+id/googlebtn"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
@@ -78,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/loginRedirectText"
-                android:text="Already a user? Login"
+                android:text="@string/already_a_user"
                 android:layout_gravity="center"
                 android:padding="8dp"
                 android:textSize="18sp"
