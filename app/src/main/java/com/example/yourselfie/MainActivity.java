@@ -42,7 +42,7 @@ import java.util.Map;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         cameraButton = findViewById(R.id.camera_button);
-        ///userName = findViewById(R.id.userName);
+        userName = findViewById(R.id.userName);
         googleOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         googleClient = GoogleSignIn.getClient(this, googleOptions);
         GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
