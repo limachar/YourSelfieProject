@@ -41,10 +41,13 @@ import java.util.Map;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        previewView = findViewById(R.id.previewView);
         cameraButton = findViewById(R.id.camera_button);
         userName = findViewById(R.id.userName);
         googleOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         googleClient = GoogleSignIn.getClient(this, googleOptions);
+
         GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (gAccount != null){
             String gName = gAccount.getDisplayName();
