@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.common.util.concurrent.ListenableFuture;
@@ -33,7 +34,7 @@ public class PhotoActivity extends AppCompatActivity {
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA"};
     ImageCapture imageCapture;
     PreviewView previewView;
-    Button photoButton;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class PhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_photo);
 
         previewView = findViewById(R.id.previewView);
-        photoButton = findViewById(R.id.photo_button);
+        imageView = findViewById(R.id.image);
 
 
         ActivityResultLauncher<String[]> activityResultLauncher = registerForActivityResult(
@@ -67,7 +68,7 @@ public class PhotoActivity extends AppCompatActivity {
         );
 
         activityResultLauncher.launch(REQUIRED_PERMISSIONS);
-        photoButton.setOnClickListener(view -> takePhoto());
+        imageView.setOnClickListener(view -> takePhoto());
     }
 
     private void startCamera() {
