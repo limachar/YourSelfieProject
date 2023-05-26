@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -26,7 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button cameraButton = findViewById(R.id.camera_button);
+        ImageButton cameraButton = findViewById(R.id.camera_button);
         userName = findViewById(R.id.userName);
         googleOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         googleClient = GoogleSignIn.getClient(this, googleOptions);

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/mint_green"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -45,15 +45,16 @@
                 app:layout_constraintTop_toBottomOf="@id/Hello" />
 
 
-            <Button
+            <ImageButton
                 android:id="@+id/camera_button"
                 android:layout_gravity="center"
-                android:layout_width="320dp"
-                android:layout_height="60dp"
+                android:layout_width="110dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="30dp"
-                android:text="@string/take_photo"
-                android:textSize="18sp"
-                app:cornerRadius="30dp" />
+                android:backgroundTint="@android:color/transparent"
+                android:foregroundTint="@color/white"
+                android:src="@drawable/baseline_photo_camera_24"
+                android:scaleType="fitXY"/>
 
 
 
