@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/bg_gradient"/>
+    <item>
+        <bitmap android:gravity="center"
+            android:src="@drawable/yellow_smiley"/>
+    </item>
+    <item android:bottom="50dp"> // setting the image from bottom
+        <bitmap
+            android:gravity="bottom"
+            android:src="@drawable/app_text"/>
+    </item>
+</layer-list>
