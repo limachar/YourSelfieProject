@@ -16,4 +16,6 @@
     <string name="already_a_user">Already a user? Login</string>
     <string name="take_photo">Enable Camera</string>
     <string name="yellow_smiley">Yellow Smiley Content</string>
+    <string name="greeting">It is great to see you!</string>
+    <string name="snap">Snap today\'s picture and add your mood</string>
 </resources>

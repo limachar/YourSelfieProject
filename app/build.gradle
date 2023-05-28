@@ -65,6 +65,10 @@ dependencies {
     implementation 'com.github.TutorialsAndroid:GButton:v1.0.19'
     //Google play services library for authentication
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
+    implementation 'com.github.rubensousa:gravitysnaphelper:2.2.2'
+    implementation 'androidx.core:core-splashscreen:1.0.0'
+
+
 
 
 }

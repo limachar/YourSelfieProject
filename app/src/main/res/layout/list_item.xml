@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/image_view_for_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/yellow_smiley"
-        android:contentDescription="@string/yellow_smiley"
-        />
-</LinearLayout>
+    android:id="@+id/filterImageView"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:scaleType="centerCrop"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp" />
