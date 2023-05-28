@@ -1,6 +1,5 @@
 package com.example.yourselfie;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,10 +14,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -26,7 +24,6 @@ public class SignupActivity extends AppCompatActivity {
     private TextView loginRedirectText;
     private Button signupButton;
     private FirebaseAuth auth;
-    GoogleSignInButton googleButton;
     GoogleSignInOptions googleOptions;
     GoogleSignInClient googleClient;
 
@@ -46,6 +43,7 @@ public class SignupActivity extends AppCompatActivity {
         googleOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
 
         googleClient = GoogleSignIn.getClient(this, googleOptions);
+        auth = FirebaseAuth.getInstance();
 
         GoogleSignInAccount googleAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (googleAccount != null){
@@ -68,7 +66,7 @@ public class SignupActivity extends AppCompatActivity {
                         Toast.makeText(SignupActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                     } else {
-                        Toast.makeText(SignupActivity.this, "SignUp Failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignupActivity.this, "SignUp Failed" + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
