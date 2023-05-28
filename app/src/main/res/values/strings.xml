@@ -15,4 +15,5 @@
     <string name="sign_up">Sign Up</string>
     <string name="already_a_user">Already a user? Login</string>
     <string name="take_photo">Enable Camera</string>
+    <string name="yellow_smiley">Yellow Smiley Content</string>
 </resources>
