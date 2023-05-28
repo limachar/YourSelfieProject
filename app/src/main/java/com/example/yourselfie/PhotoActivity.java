@@ -14,19 +14,22 @@ import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -35,14 +38,30 @@ public class PhotoActivity extends AppCompatActivity {
     ImageCapture imageCapture;
     PreviewView previewView;
     ImageView imageView;
-
+    SmileyAdapter smileyAdapter;
+    RecyclerView smileyRecyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
 
         previewView = findViewById(R.id.previewView);
-        imageView = findViewById(R.id.image);
+
+        smileyRecyclerView = findViewById(R.id.filterRecyclerView);
+        smileyRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        // Creates the list of images
+        List<Integer> filterImages = new ArrayList<>();
+        filterImages.add(R.drawable.grey_smiley);
+        filterImages.add(R.drawable.red_smiley);
+        filterImages.add(R.drawable.yellow_smiley);
+        filterImages.add(R.drawable.green_smiley);
+        filterImages.add(R.drawable.blue_smiley);
+
+
+        smileyAdapter = new SmileyAdapter(this, filterImages);
+        smileyRecyclerView.setAdapter(smileyAdapter);
+
 
 
         ActivityResultLauncher<String[]> activityResultLauncher = registerForActivityResult(
@@ -68,7 +87,7 @@ public class PhotoActivity extends AppCompatActivity {
         );
 
         activityResultLauncher.launch(REQUIRED_PERMISSIONS);
-        imageView.setOnClickListener(view -> takePhoto());
+        smileyRecyclerView.setOnClickListener(view -> takePhoto());
     }
 
     private void startCamera() {
@@ -105,7 +124,7 @@ public class PhotoActivity extends AppCompatActivity {
 
     private void takePhoto() {
 
-        // Create time stamped name and MediaStore entry.
+        // Creates time stamped name and MediaStore entry.
         String name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
                 .format(System.currentTimeMillis());
         ContentValues contentValues = new ContentValues();
@@ -113,14 +132,14 @@ public class PhotoActivity extends AppCompatActivity {
         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
         contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/YourSelfie");
 
-        // Create output options object which contains file + metadata
+        // Creates output options object which contains file + metadata
         ImageCapture.OutputFileOptions outputOptions = new ImageCapture.OutputFileOptions.Builder(
                 getContentResolver(),
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 contentValues)
                 .build();
 
-        // Set up image capture listener, which is triggered after photo has been taken
+        // Sets up image capture listener, which is triggered after photo has been taken
         imageCapture.takePicture(
                 outputOptions,
                 ContextCompat.getMainExecutor(this),
@@ -162,29 +181,4 @@ public class PhotoActivity extends AppCompatActivity {
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
-//Intent for taking the photo
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                //TODO: exception handling
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
-        }
-    }
-}
 */
