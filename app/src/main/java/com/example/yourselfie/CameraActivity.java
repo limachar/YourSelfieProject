@@ -16,16 +16,26 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,22 +43,27 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class PhotoActivity extends AppCompatActivity {
+public class CameraActivity extends AppCompatActivity implements SmileyAdapter.OnItemClickListener {
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA"};
     ImageCapture imageCapture;
     PreviewView previewView;
-    ImageView imageView;
+    ImageView photoView;
     SmileyAdapter smileyAdapter;
     RecyclerView smileyRecyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo);
+        setContentView(R.layout.activity_camera);
 
         previewView = findViewById(R.id.previewView);
+        photoView = findViewById(R.id.photo);
 
         smileyRecyclerView = findViewById(R.id.filterRecyclerView);
-        smileyRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        smileyRecyclerView.setLayoutManager( new CenteredLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        // Add item decoration
+        int itemSpacing = getResources().getDimensionPixelSize(R.dimen.filter_item_spacing);
+        Context context = this;
+        smileyRecyclerView.addItemDecoration(new FilterItemDecoration(context, itemSpacing));
 
         // Creates the list of images
         List<Integer> filterImages = new ArrayList<>();
@@ -60,8 +75,11 @@ public class PhotoActivity extends AppCompatActivity {
 
 
         smileyAdapter = new SmileyAdapter(this, filterImages);
+        smileyAdapter.setItemClickListener(this);
         smileyRecyclerView.setAdapter(smileyAdapter);
 
+        SnapHelper snapHelper = new GravitySnapHelper(Gravity.CENTER);
+        snapHelper.attachToRecyclerView(smileyRecyclerView);
 
 
         ActivityResultLauncher<String[]> activityResultLauncher = registerForActivityResult(
@@ -87,7 +105,12 @@ public class PhotoActivity extends AppCompatActivity {
         );
 
         activityResultLauncher.launch(REQUIRED_PERMISSIONS);
-        smileyRecyclerView.setOnClickListener(view -> takePhoto());
+    }
+//Overriding the onclick from the interface inside the SmileyAdapter class
+    @Override
+    public void onItemClick(int position) {
+        takePhoto(position);
+        Toast.makeText(this, "Clicked position: " + position, Toast.LENGTH_SHORT).show();
     }
 
     private void startCamera() {
@@ -122,7 +145,10 @@ public class PhotoActivity extends AppCompatActivity {
         }, ContextCompat.getMainExecutor(this));
     }
 
-    private void takePhoto() {
+    private void takePhoto(int position) {
+
+
+        //saving position to database
 
         // Creates time stamped name and MediaStore entry.
         String name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
@@ -139,7 +165,7 @@ public class PhotoActivity extends AppCompatActivity {
                 contentValues)
                 .build();
 
-        // Sets up image capture listener, which is triggered after photo has been taken
+        // Takes ans saves the photo to the given uri
         imageCapture.takePicture(
                 outputOptions,
                 ContextCompat.getMainExecutor(this),
@@ -154,31 +180,62 @@ public class PhotoActivity extends AppCompatActivity {
                         String msg = "Photo capture succeeded: " + output.getSavedUri();
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                         Log.d(TAG, msg);
+                        ImageDecoder.Source source = ImageDecoder.createSource(getApplicationContext().getContentResolver(), output.getSavedUri());
+                        try {
+                            Bitmap bitmap = ImageDecoder.decodeBitmap(source);
+                            photoView.setImageBitmap(bitmap);
+                            Log.d(TAG, "SETTING IMAGE TO VIEW *******************");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
         );
     }
+    public class FilterItemDecoration extends RecyclerView.ItemDecoration {
 
-}
+        private int itemSpacing;
+        private int centerPosition;
 
+        FilterItemDecoration(Context context, int itemSpacing) {
+            this.itemSpacing = dpToPx(context, itemSpacing);
+        }
 
-   /* //Saving photo/creating image with date and time
-    String currentPhotoPath;
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix *//*
-                ".jpg",         /* suffix *//*
-                storageDir      /* directory */
-/*
-        );
+            int position = parent.getChildAdapterPosition(view);
+            int itemCount = parent.getAdapter().getItemCount();
 
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
+            // Calculate the center position
+            centerPosition = itemCount / 2;
+            System.out.println(centerPosition);
+
+            if (position == centerPosition - 2) {
+                // First image
+                int spacing = (parent.getWidth() - view.getWidth() - 4 * itemSpacing) / 2;
+                outRect.left = spacing;
+                outRect.right = itemSpacing;
+            } else if (position == centerPosition + 2) {
+                // Last image
+                int spacing = (parent.getWidth() - view.getWidth() - 4 * itemSpacing) / 2;
+                outRect.left = itemSpacing;
+                outRect.right = spacing;
+            } else if (position == centerPosition) {
+                // Center image
+                outRect.left = itemSpacing;
+                outRect.right = itemSpacing;
+            } else {
+                // Other images
+                outRect.left = itemSpacing;
+                outRect.right = itemSpacing;
+            }
+        }
+
+        private int dpToPx(Context context, int dp) {
+            DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+            return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        }
     }
-*/
+}
