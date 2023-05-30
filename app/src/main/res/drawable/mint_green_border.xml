@@ -5,12 +5,9 @@
     <corners
         android:radius="25dp"/>
 
-    <stroke
-        android:color="@color/white"
-        android:width="2dp"/>
 
     <solid
-        android:color="@android:color/transparent"/>
+        android:color="@android:color/darker_gray"/>
 
     <padding
         android:top="0dp"
