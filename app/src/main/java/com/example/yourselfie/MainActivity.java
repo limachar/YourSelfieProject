@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -39,7 +38,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
         }
 
         cameraButton.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, PhotoActivity.class);
+            Intent intent = new Intent(MainActivity.this, CameraActivity.class);
             startActivity(intent);
      });
     }

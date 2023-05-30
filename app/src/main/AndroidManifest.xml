@@ -27,6 +27,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
         <activity
             android:name=".LoginActivity"
             android:exported="true"
@@ -44,8 +45,12 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".PhotoActivity"
+            android:name=".CameraActivity"
             android:exported="false" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

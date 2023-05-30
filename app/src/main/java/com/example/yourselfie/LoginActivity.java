@@ -26,6 +26,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import androidx.core.splashscreen.SplashScreen;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText loginEmail, loginPassword;
@@ -40,8 +42,11 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
+        splashScreen.setKeepOnScreenCondition(() -> false );
 
         loginEmail = findViewById(R.id.login_email);
         loginPassword = findViewById(R.id.login_password);
@@ -116,4 +121,5 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
 }

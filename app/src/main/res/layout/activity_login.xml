@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/mint_green"
+    android:background="#F7EAEAEA"
     tools:context=".SignupActivity">
 
     <LinearLayout
@@ -14,17 +14,26 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:src="@drawable/green_smiley"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="380dp"
+            android:layout_marginTop="40dp"
             android:orientation="vertical"
             android:padding="20dp"
             tools:ignore="UselessParent">
 
+
+
+
             <EditText
                 android:id="@+id/login_email"
-                android:layout_width="350dp"
+                android:layout_width="320dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
                 android:layout_gravity="center"
@@ -32,13 +41,13 @@
                 android:drawableStart="@drawable/ic_baseline_email_24"
                 android:drawablePadding="8dp"
                 android:hint="@string/email"
-                android:padding="8dp"
+                android:padding="15dp"
                 android:autofillHints="example@mail.com"
                 android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/login_password"
-                android:layout_width="350dp"
+                android:layout_width="320dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center"
@@ -46,7 +55,7 @@
                 android:drawableStart="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="8dp"
                 android:hint="@string/password"
-                android:padding="8dp"
+                android:padding="15dp"
                 android:autofillHints=""/>
 
 
@@ -70,7 +79,7 @@
                 android:layout_marginEnd="40dp"
                 android:padding="8dp"
                 android:text="@string/google_sign_in"
-                android:textColor="#757575" />
+                android:textColor="#474747" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -81,7 +90,7 @@
                 android:padding="8dp"
                 android:textSize="18sp"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/moss_green"/>
+                android:textColor="@color/black"/>
 
 
         </LinearLayout>
